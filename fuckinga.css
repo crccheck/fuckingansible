@@ -1,2 +1,12 @@
+/* line 2, /home/kurol/projects/fuckingansible/fuckinga.sass */
+html {
+  background: dimgrey; }
+
+/* line 5, /home/kurol/projects/fuckingansible/fuckinga.sass */
+input {
+  box-sizing: border-box;
+  font-family: monospace;
+  display: block;
+  width: 100%; }
 
 /*# sourceMappingURL=fuckinga.css.map */
