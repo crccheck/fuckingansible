@@ -22,11 +22,23 @@ var printCmd = function (module, text) {
 var apt = function (shCommand, tokens) {
   var module = 'apt';
   setDoc('http://docs.ansible.com/apt_module.html');
-  if (tokens[0] === 'install') {
-    _.each(tokens.slice(1), function (x) {
-      printCmd(module, 'name=' + x);
-    });
-
+  switch (tokens[0]) {
+    case 'install':
+      tokens.shift();
+      _.each(tokens, function (x) {
+        if (x[0] != '-') {
+          printCmd(module, 'name=' + x);
+        }
+      });
+    break;
+    case 'remove':
+      tokens.shift();
+      _.each(tokens, function (x) {
+        if (x[0] != '-') {
+          printCmd(module, 'name=' + x + ' state=absent');
+        }
+      });
+    break;
   }
 };
 
@@ -35,9 +47,10 @@ var processInput = function (shCommand) {
   cls();
   console.log(shCommand);
   // TODO strip and handle sudo
-  var tokens = shCommand.split(/\s+/);
+  var tokens = shCommand.trim().split(/\s+/);
   if (tokens[0] === 'apt-get') {
-    apt(shCommand, tokens.slice(1));
+    tokens.shift();
+    apt(shCommand, tokens);
   }
 };
 
