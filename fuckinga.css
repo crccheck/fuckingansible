@@ -3,7 +3,7 @@ html {
   background: dimgrey; }
 
 /* line 5, /home/kurol/projects/fuckingansible/fuckinga.sass */
-input {
+input, textarea {
   box-sizing: border-box;
   font-family: monospace;
   display: block;
