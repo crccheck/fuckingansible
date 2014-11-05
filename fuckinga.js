@@ -19,7 +19,7 @@ var cls = function () {
 };
 
 var printCmd = function (module, text) {
-  out.innerHTML +=  '- ' + module + ': ' + text + '\n';
+  out.innerHTML +=  module + ': ' + text + '\n';
   if (out.scrollHeight > out.clientHeight) {
     $out.height(out.scrollHeight)
   }
@@ -53,8 +53,11 @@ var apt = function (shCommand, tokens) {
 var processInput = function (shCommand) {
   cls();
   console.log(shCommand);
-  // TODO handle sudo
   var tokens = parse(shCommand.trim());
+  if (tokens[0] === 'sudo') {
+    tokens.shift();
+    printCmd('sudo', 'yes')
+  }
   if (tokens[0] === 'apt-get') {
     tokens.shift();
     apt(shCommand, tokens);
