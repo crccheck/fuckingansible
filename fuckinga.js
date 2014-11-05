@@ -1,4 +1,6 @@
-var CommandParser = require('./parser')
+var $ = require('jquery');
+var _ = require('lodash');
+var CommandParser = require('./parser');
 
 
 var $docs = $('#docs');
