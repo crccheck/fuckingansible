@@ -28,3 +28,5 @@ $('#in').on('keyup', function () {
   var commands = backend.processInput(this.value);
   _.each(commands, printCmd);
 });
+
+$('form').on('submit', function (e) { e.preventDefault(); });
