@@ -43,7 +43,6 @@ var apt = function (shCommand, tokens) {
 
 
 var processInput = function (shCommand) {
-  console.log(shCommand);
   var tokens = parse(shCommand.trim());
   commands = [];
   if (tokens[0] === 'sudo') {

@@ -34,6 +34,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
 
-  grunt.registerTask 'default', ['sass', 'browserify']
-  grunt.registerTask 'dev', ['default', 'watch']
+  grunt.registerTask 'default', ['build', 'test']
+  grunt.registerTask 'dev', ['build', 'watch']
+  grunt.registerTask 'build', ['sass', 'browserify']
   grunt.registerTask 'test', ['nodeunit']
