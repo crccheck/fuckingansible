@@ -22,6 +22,8 @@ module.exports = (grunt) ->
         tasks: ['browserify']
         options:
           spawn: false
+    nodeunit:
+      all: ['test/*_test.js']
 
 
   # TODO livereload
@@ -30,6 +32,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-sass'
   grunt.loadNpmTasks 'grunt-browserify'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-nodeunit'
 
   grunt.registerTask 'default', ['sass', 'browserify']
   grunt.registerTask 'dev', ['default', 'watch']
+  grunt.registerTask 'test', ['nodeunit']

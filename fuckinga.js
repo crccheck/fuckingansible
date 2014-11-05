@@ -71,3 +71,7 @@ var processInput = function (shCommand) {
 
 
 $('#in').on('keyup', function () { processInput(this.value); });
+
+
+exports.processInput = processInput;
+exports.printCmd = printCmd;
