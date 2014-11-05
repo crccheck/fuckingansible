@@ -24,6 +24,10 @@ module.exports = (grunt) ->
           spawn: false
     nodeunit:
       all: ['test/*_test.js']
+    uglify:
+      dist:
+        files:
+          'main.min.js': ['main.js']
 
 
   # TODO livereload
@@ -33,8 +37,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-browserify'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
 
   grunt.registerTask 'default', ['build', 'test']
   grunt.registerTask 'dev', ['build', 'watch']
-  grunt.registerTask 'build', ['sass', 'browserify']
+  grunt.registerTask 'build', ['sass', 'browserify', 'uglify']
   grunt.registerTask 'test', ['nodeunit']
