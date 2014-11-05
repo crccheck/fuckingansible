@@ -1,3 +1,6 @@
+var CommandParser = require('./parser')
+
+
 var $docs = $('#docs');
 
 // wrapper around parser.js

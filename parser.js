@@ -27,3 +27,6 @@ var CommandParser = (function() {
     getCommandName: getCommandName
   }
 })();
+
+// I added this for CommonJS support
+module.exports = CommandParser;
