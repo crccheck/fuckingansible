@@ -1,5 +1,12 @@
 var $docs = $('#docs');
 
+// wrapper around parser.js
+var parse = function (line) {
+  // return line.split(/s+/);
+  return CommandParser.parse(line, true);
+};
+
+
 var setDoc = function (url) {
   $docs.attr('href', url).text(url);
 };
@@ -46,8 +53,8 @@ var apt = function (shCommand, tokens) {
 var processInput = function (shCommand) {
   cls();
   console.log(shCommand);
-  // TODO strip and handle sudo
-  var tokens = shCommand.trim().split(/\s+/);
+  // TODO handle sudo
+  var tokens = parse(shCommand.trim());
   if (tokens[0] === 'apt-get') {
     tokens.shift();
     apt(shCommand, tokens);
