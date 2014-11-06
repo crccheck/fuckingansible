@@ -21,6 +21,7 @@ exports.testAptRepository = function (test) {
   test.done();
 };
 
+
 exports.testPip = function (test) {
   var commands = backend.processInput('pip install foo');
   test.deepEqual(commands[0], {pip: "name=foo"});
@@ -42,5 +43,18 @@ exports.testPip = function (test) {
   commands = backend.processInput('pip uninstall foo bar');
   test.deepEqual(commands[0], {pip: "name=foo state=absent"});
   test.deepEqual(commands[1], {pip: "name=bar state=absent"});
+  test.done();
+};
+
+
+exports.testNpm = function (test) {
+  var commands = backend.processInput('npm install foo');
+  test.deepEqual(commands[0], {npm: "name=foo"});
+
+  commands = backend.processInput('npm install -g foo');
+  test.deepEqual(commands[0], {npm: "name=foo global=yes"});
+
+  commands = backend.processInput('npm install --global foo');
+  test.deepEqual(commands[0], {npm: "name=foo global=yes"});
   test.done();
 };

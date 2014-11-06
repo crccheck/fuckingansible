@@ -13,6 +13,7 @@ var commandsToModule = {
   'apt-get': 'apt',
   'add-apt-repository': 'apt_repository',
   'pip': 'pip',
+  'npm': 'npm',
 };
 
 
@@ -63,6 +64,21 @@ var ansibleModules = {
       tokens.shift();
       _.each(tokens, function (x) {
         commands.push({'pip': 'name=' + x + ' state=absent'});
+      });
+    }
+    return commands;
+  },
+  npm: function (shCommand, tokens, options) {
+    setDoc('http://docs.ansible.com/pip_module.html');
+    var commands = [];
+    if (tokens[0] === 'install') {
+      tokens.shift();
+      _.each(tokens, function (x) {
+        if ('-g' in options || '--global' in options) {
+          commands.push({'npm': 'name=' + x + ' global=yes'});
+        } else {
+          commands.push({'npm': 'name=' + x});
+        }
       });
     }
     return commands;
