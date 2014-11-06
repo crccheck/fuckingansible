@@ -13,35 +13,44 @@ var parse = function (line) {
 // FIXME
 var setDoc = function () {};
 
-var apt = function (shCommand, tokens) {
-  setDoc('http://docs.ansible.com/apt_module.html');
-  var commands = [];
-  switch (tokens[0]) {
-    case 'install':
-      tokens.shift();
-      _.each(tokens, function (x) {
-        if (x[0] != '-') {
-          commands.push({'apt': 'name=' + x});
-        }
-      });
-    break;
-    case 'remove':
-      tokens.shift();
-      _.each(tokens, function (x) {
-        if (x[0] != '-') {
-          commands.push({'apt': 'name=' + x + ' state=absent'});
-        }
-      });
-    break;
-  }
-  return commands;
+
+// map possible commands to the ansible module responsible
+var commandsToModule = {
+  'apt-get': 'apt',
+  'add-apt-repository': 'apt_repository'
 };
 
-var apt_repository = function (shCommand, tokens) {
-  setDoc('http://docs.ansible.com/apt_repository_module.html');
-  return {
-    apt_repository: "repo='" + tokens[0] + "'"
-  };
+
+var ansibleModules = {
+  apt: function (shCommand, tokens) {
+    setDoc('http://docs.ansible.com/apt_module.html');
+    var commands = [];
+    switch (tokens[0]) {
+      case 'install':
+        tokens.shift();
+        _.each(tokens, function (x) {
+          if (x[0] != '-') {
+            commands.push({'apt': 'name=' + x});
+          }
+        });
+      break;
+      case 'remove':
+        tokens.shift();
+        _.each(tokens, function (x) {
+          if (x[0] != '-') {
+            commands.push({'apt': 'name=' + x + ' state=absent'});
+          }
+        });
+      break;
+    }
+    return commands;
+  },
+  apt_repository: function (shCommand, tokens) {
+    setDoc('http://docs.ansible.com/apt_repository_module.html');
+    return {
+      apt_repository: "repo='" + tokens[0] + "'"
+    };
+  }
 };
 
 
@@ -52,18 +61,14 @@ var processInput = function (shCommand) {
     tokens.shift();
     commands.push({'sudo': 'yes'});
   }
-  if (tokens[0] === 'apt-get') {
+  var module = ansibleModules[commandsToModule[tokens[0]]];
+  if (module) {
     tokens.shift();
-    commands = commands.concat(apt(shCommand, tokens));
-  }
-  else if (tokens[0] === 'add-apt-repository') {
-    tokens.shift();
-    commands = commands.concat(apt_repository(shCommand, tokens));
+    commands = commands.concat(module(shCommand, tokens));
   }
   return commands;
 };
 
 
 exports.parse = parse;
-exports.apt = apt;
 exports.processInput = processInput;
