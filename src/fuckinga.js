@@ -43,3 +43,9 @@ $('#in').on('keyup', function () {
 });
 
 $('form').on('submit', function (e) { e.preventDefault(); });
+
+
+// live samples
+$('.samples code').on('click', function () {
+  $('#in').val(this.innerHTML).trigger('keyup');
+});

@@ -8,6 +8,9 @@ exports.testApt = function (test) {
   commands = backend.processInput('apt-get install foo -y');
   test.deepEqual(commands[0], {apt: 'name=foo'});
 
+  commands = backend.processInput('apt-get remove foo');
+  test.deepEqual(commands[0], {apt: 'name=foo state=absent'});
+
   commands = backend.processInput('sudo apt-get install foo');
   test.deepEqual(commands[0], {sudo: 'yes'});
   test.deepEqual(commands[1], {apt: 'name=foo'});

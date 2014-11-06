@@ -9,7 +9,7 @@
 <body>
   <section>
     <form action="." method="GET">
-      <label for="in">Shell command:</label>
+      <label for="in">Type your shell command here:</label>
       <input id="in" type="text" name='shinput' placeholder="apt-get install toilet" autofocus>
       <label for="out">Equivalent Ansible command:</label>
       <textarea id="out" readonly></textarea>
@@ -20,11 +20,16 @@
     <p>
       Helper to translate shell commands to Ansible playbook entries.
     </p>
-    <h3>Supports</h3>
-    <ul class="examples">
+    <h3>Samples</h3>
+    <ul class="samples">
       <li><code>apt-get -y install toilet</code></li>
+      <li><code>apt-get remove lolcat</code></li>
+      <li><code>sudo add-apt-repository -y ppa:foo/bar</code></li>
+      <li><code>pip install project_runpy==0.3.1</code></li>
+      <li><code>npm install -g grunt-cli</code></li>
     </ul>
     <h3>Limitations</h3>
+    <p><em>Very</em> few commands are supported. Basically, just what's in the samples.</p>
     <p>Options must be specified like <code>--port=8000</code>, not <code>--port 8000</code></p>
 
   </section>
