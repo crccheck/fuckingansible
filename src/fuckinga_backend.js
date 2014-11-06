@@ -37,6 +37,13 @@ var apt = function (shCommand, tokens) {
   return commands;
 };
 
+var apt_repository = function (shCommand, tokens) {
+  setDoc('http://docs.ansible.com/apt_repository_module.html');
+  return {
+    apt_repository: "repo='" + tokens[0] + "'"
+  };
+};
+
 
 var processInput = function (shCommand) {
   var tokens = parse(shCommand.trim());
@@ -48,6 +55,10 @@ var processInput = function (shCommand) {
   if (tokens[0] === 'apt-get') {
     tokens.shift();
     commands = commands.concat(apt(shCommand, tokens));
+  }
+  else if (tokens[0] === 'add-apt-repository') {
+    tokens.shift();
+    commands = commands.concat(apt_repository(shCommand, tokens));
   }
   return commands;
 };
