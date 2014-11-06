@@ -18,20 +18,31 @@ var out = document.getElementById('out'), $out = $(out);
 // The node packages for dealing with YAML seem like too much for this
 // application, but maybe switch to one of those once I figure out which one of
 // the 60 yaml packages works.
-var printCmds = function (obj) {
-  var text = '';
+var printCmds = function (commands) {
+  var textBits = [];
   var prefix = '- ';
-  _.each(obj, function (x) {
+  var isDoc = function (x) { return '_doc' in x; };
+  var justCommands = _.reject(commands, isDoc);
+  var justDocs = _.filter(commands, isDoc);
+  // display `justCommands` as YAML
+  _.each(justCommands, function (x) {
     _.each(x, function (v, k) {
-      text += prefix + k + ': ' + v + '\n';
+      textBits.push(prefix + k + ': ' + v);
     });
     prefix = '  ';
   });
-  out.innerHTML = text;
+  out.innerHTML = textBits.join('\n');
   // adjust textarea height to fit contents
   if (out.scrollHeight > out.clientHeight) {
     $out.height(out.scrollHeight);
   }
+  $docs.empty();
+  _.each(justDocs, function (x) {
+    // may need to run this through `_.uniq`
+    _.each(x, function (v) {
+      $docs.append('<li><a href="' + v + '" target="ansibleDocs">' + v + '</a></li>');
+    });
+  });
 };
 
 backend.setDoc = setDoc;  // FIXME

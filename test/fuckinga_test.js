@@ -5,7 +5,7 @@ var backend = require('../src/fuckinga_backend');
 // docs. Strip them for the tests.
 var processInput = function (line) {
   var commands = backend.processInput(line);
-  return _.filter(commands, function (x) { return !('_doc' in x); });
+  return _.reject(commands, function (x) { return '_doc' in x; });
 };
 
 
