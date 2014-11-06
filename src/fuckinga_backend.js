@@ -6,13 +6,15 @@ var parser = require('./parser');
 
 // map possible commands to the ansible module responsible
 var commandsToModule = {
-  'apt-get': 'apt',
   'add-apt-repository': 'apt_repository',
-  'pip': 'pip',
+  'apt-get': 'apt',
+  'apt-key': 'apt_key',
   'npm': 'npm',
+  'pip': 'pip'
 };
 
 
+// name the keys after the ansible module name
 var ansibleModules = {
   apt: function (shCommand, tokens) {
     var commands = [{'_doc': 'http://docs.ansible.com/apt_module.html'}];
@@ -36,6 +38,13 @@ var ansibleModules = {
     var commands = [{'_doc': 'http://docs.ansible.com/apt_repository_module.html'}];
     commands.push({
       apt_repository: "repo='" + tokens[0] + "'"
+    });
+    return commands;
+  },
+  apt_key: function (shCommand, tokens, options) {
+    var commands = [{'_doc': 'http://docs.ansible.com/apt_key_module.html'}];
+    commands.push({
+      apt_key: 'keyserver=' + options['--keyserver'] + ' id=' + options['--recv-keys']
     });
     return commands;
   },

@@ -38,6 +38,15 @@ exports.testAptRepository = function (test) {
   test.done();
 };
 
+exports.testAptRepository = function (test) {
+  var commands = processInput(
+    'apt-key adv --keyserver=hkp://keyserver.ubuntu.com:80 --recv-keys=1337'
+  );
+  test.deepEqual(commands[0], {
+    apt_key: "keyserver=hkp://keyserver.ubuntu.com:80 id=1337"});
+  test.done();
+};
+
 
 exports.testPip = function (test) {
   var commands = processInput('pip install foo');
