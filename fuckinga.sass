@@ -1,8 +1,10 @@
 // TODO: normalize
 
+$prompt-size: 1.5rem
+
 html
   background: dimgrey
-  color: #222
+  color: ghostwhite
   font-family: sans-serif
 
 
@@ -15,6 +17,8 @@ input, textarea
   font-family: monospace
 
 textarea
+  background: white
+  color: #222
   display: block
   margin-bottom: 1em
   width: 100%
@@ -23,16 +27,18 @@ textarea
   background: black
   color: whitesmoke
   font-family: monospace
+  font-size: $prompt-size * 1.25
   margin-bottom: 1em
   padding-left: 0.4em
   > input
+    background: transparent
     border: 0
     color: inherit
-    outline: 0
-    background: transparent
+    font-size: $prompt-size
     margin-left: 0.4em
+    outline: 0
     width: 90%
-    width: calc(100% - 1.1em)
+    width: calc(100% - 1.2em)
 
 code
   background: beige
@@ -49,7 +55,8 @@ h3 > small
 
 .content
   background: white
-  margin: 0 auto
+  color: #222
+  margin: 0 auto 1em
   max-width: 50em
   padding: 0.5em 1em
   p
