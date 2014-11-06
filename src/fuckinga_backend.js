@@ -42,7 +42,7 @@ var ansibleModules = {
       apt_repository: "repo='" + tokens[0] + "'"
     };
   },
-  pip: function (shCommand, tokens) {
+  pip: function (shCommand, tokens, options) {
     setDoc('http://docs.ansible.com/pip_module.html');
     var commands = [];
     if (tokens[0] === 'install') {
@@ -52,7 +52,11 @@ var ansibleModules = {
         if (bits.length === 2) {
           commands.push({'pip': 'name=' + bits[0] + ' version=' + bits[1]});
         } else {
-          commands.push({'pip': 'name=' + bits[0]});
+          if ('-U' in options || '--upgrade' in options) {
+            commands.push({'pip': 'name=' + bits[0] + ' state=latest'});
+          } else {
+            commands.push({'pip': 'name=' + bits[0]});
+          }
         }
       });
     } else if (tokens[0] === 'uninstall') {

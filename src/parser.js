@@ -39,7 +39,12 @@ var parse = function (line) {
   var tokens = CommandParser.parse(line, true);
   _.each(tokens, function (x) {
     if (x.charAt(0) === '-') {
-      // TODO
+      var equalsIdx = x.indexOf('=');
+      if (equalsIdx !== -1) {
+        options[x.substr(0, equalsIdx)] = x.substr(equalsIdx + 1);
+      } else {
+        options[x] = '';
+      }
     } else {
       args.push(x);
     }

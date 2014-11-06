@@ -7,7 +7,15 @@ exports.testParse = function (test) {
 
   test.deepEqual(parser.parse('a b c'), [['a', 'b', 'c'], {}]);
 
-  test.deepEqual(parser.parse('a b c -n'), [['a', 'b', 'c'], {}]);
+  test.deepEqual(parser.parse('a b c -n'), [['a', 'b', 'c'], {'-n': ''}]);
+
+  test.deepEqual(
+    parser.parse('a b c --n=fart'),
+    [['a', 'b', 'c'], {'--n': 'fart'}]
+  );
+
+  // TODO
+    // parser.parse('a b c --n fart'),
 
   test.done();
 };
