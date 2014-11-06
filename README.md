@@ -3,5 +3,7 @@ Getting Started
 
 ```bash
 npm install
-grunt
+grunt dev
 ```
+
+Connect to the connect server at <http://localhost:8000/>

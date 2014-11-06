@@ -12,11 +12,16 @@ module.exports = (grunt) ->
         files:
           'fuckinga.js': ['src/fuckinga.js']
     watch:
+      options:
+        livereload: true
       style:
         files: ['*.sass']
         tasks: ['sass']
         options:
-          spawn: false
+          livereload: false
+          spawn: true
+      css:
+        files: ['*.css']
       scripts:
         files: ['src/*.js']
         tasks: ['browserify', 'uglify']
@@ -28,6 +33,10 @@ module.exports = (grunt) ->
       dist:
         files:
           'fuckinga.min.js': ['fuckinga.js']
+    connect:
+      server:
+        options:
+          livereload: true
 
 
   # TODO livereload
@@ -38,8 +47,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-nodeunit'
   grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-contrib-connect'
 
   grunt.registerTask 'default', ['build', 'test']
-  grunt.registerTask 'dev', ['build', 'watch']
+  grunt.registerTask 'dev', ['connect', 'build', 'watch']
   grunt.registerTask 'build', ['sass', 'browserify', 'uglify']
   grunt.registerTask 'test', ['nodeunit']
