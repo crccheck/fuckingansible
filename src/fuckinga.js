@@ -32,10 +32,8 @@ var printCmds = function (commands) {
     prefix = '  ';
   });
   out.innerHTML = textBits.join('\n');
-  // adjust textarea height to fit contents
-  if (out.scrollHeight > out.clientHeight) {
-    $out.height(out.scrollHeight);
-  }
+
+  $out.height(0).height(out.scrollHeight);
   $docs.empty();
   _.each(justDocs, function (x) {
     // may need to run this through `_.uniq`
