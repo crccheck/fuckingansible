@@ -30,11 +30,22 @@ var CommandParser = (function() {
 
 
 //////////// separate args from options
-// TODO
+var _ = require('lodash');
 
+// parse a line into args and options (the first arg is the command)
 var parse = function (line) {
-  // return line.split(/s+/);
-  return CommandParser.parse(line, true);
+  var args = [];
+  var options = {};
+  var tokens = CommandParser.parse(line, true);
+  _.each(tokens, function (x) {
+    if (x.charAt(0) === '-') {
+      // TODO
+    } else {
+      args.push(x);
+    }
+
+  });
+  return [args, options];
 };
 
 

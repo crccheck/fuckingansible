@@ -49,16 +49,18 @@ var ansibleModules = {
 
 
 var processInput = function (shCommand) {
-  var tokens = parser.parse(shCommand.trim());
+  var parser_out = parser.parse(shCommand.trim());
+  var args = parser_out[0];
+  var options = parser_out[1];
   var commands = [];
-  if (tokens[0] === 'sudo') {
-    tokens.shift();
+  if (args[0] === 'sudo') {
+    args.shift();
     commands.push({'sudo': 'yes'});
   }
-  var module = ansibleModules[commandsToModule[tokens[0]]];
+  var module = ansibleModules[commandsToModule[args[0]]];
   if (module) {
-    tokens.shift();
-    commands = commands.concat(module(shCommand, tokens));
+    args.shift();
+    commands = commands.concat(module(shCommand, args, options));
   }
   return commands;
 };

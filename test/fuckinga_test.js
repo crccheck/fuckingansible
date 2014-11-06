@@ -1,11 +1,11 @@
 var backend = require('../src/fuckinga_backend');
 
 
-exports.testApt = function(test) {
+exports.testApt = function (test) {
   var commands = backend.processInput('apt-get install foo');
   test.deepEqual(commands[0], {apt: 'name=foo'});
 
-  commands = backend.processInput('apt-get install foo');
+  commands = backend.processInput('apt-get install foo -y');
   test.deepEqual(commands[0], {apt: 'name=foo'});
 
   commands = backend.processInput('sudo apt-get install foo');
@@ -15,7 +15,7 @@ exports.testApt = function(test) {
 };
 
 
-exports.testAptRepository = function(test) {
+exports.testAptRepository = function (test) {
   var commands = backend.processInput('add-apt-repository foo');
   test.deepEqual(commands[0], {apt_repository: "repo='foo'"});
   test.done();
