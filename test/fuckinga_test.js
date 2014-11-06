@@ -29,6 +29,10 @@ exports.testPip = function (test) {
   test.deepEqual(commands[0], {pip: "name=foo"});
   test.deepEqual(commands[1], {pip: "name=bar"});
 
+  commands = backend.processInput('pip install foo bar==3.2.1');
+  test.deepEqual(commands[0], {pip: "name=foo"});
+  test.deepEqual(commands[1], {pip: "name=bar version=3.2.1"});
+
   commands = backend.processInput('pip uninstall foo');
   test.deepEqual(commands[0], {pip: "name=foo state=absent"});
 

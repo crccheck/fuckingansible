@@ -48,7 +48,12 @@ var ansibleModules = {
     if (tokens[0] === 'install') {
       tokens.shift();
       _.each(tokens, function (x) {
-        commands.push({'pip': 'name=' + x});
+        var bits = x.split('==');
+        if (bits.length === 2) {
+          commands.push({'pip': 'name=' + bits[0] + ' version=' + bits[1]});
+        } else {
+          commands.push({'pip': 'name=' + bits[0]});
+        }
       });
     } else if (tokens[0] === 'uninstall') {
       tokens.shift();
