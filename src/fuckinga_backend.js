@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var CommandParser = require('./parser');
 
@@ -38,10 +40,10 @@ var apt = function (shCommand, tokens) {
 
 var processInput = function (shCommand) {
   var tokens = parse(shCommand.trim());
-  commands = [];
+  var commands = [];
   if (tokens[0] === 'sudo') {
     tokens.shift();
-    commands.push({'sudo': 'yes'})
+    commands.push({'sudo': 'yes'});
   }
   if (tokens[0] === 'apt-get') {
     tokens.shift();

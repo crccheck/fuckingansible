@@ -1,3 +1,5 @@
+'use strict';
+
 // main
 var $ = require('jquery');
 var _ = require('lodash');
@@ -28,7 +30,7 @@ var printCmds = function (obj) {
   out.innerHTML = text;
   // adjust textarea height to fit contents
   if (out.scrollHeight > out.clientHeight) {
-    $out.height(out.scrollHeight)
+    $out.height(out.scrollHeight);
   }
 };
 
