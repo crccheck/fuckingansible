@@ -11,13 +11,7 @@ var parse = function (line) {
 // FIXME
 var setDoc = function () {};
 
-var printCmd = function (module, text) {
-  return module + ': ' + text;
-};
-
-
 var apt = function (shCommand, tokens) {
-  var module = 'apt';
   setDoc('http://docs.ansible.com/apt_module.html');
   var commands = [];
   switch (tokens[0]) {
@@ -25,7 +19,7 @@ var apt = function (shCommand, tokens) {
       tokens.shift();
       _.each(tokens, function (x) {
         if (x[0] != '-') {
-          commands.push(printCmd(module, 'name=' + x));
+          commands.push({'apt': 'name=' + x});
         }
       });
     break;
@@ -33,7 +27,7 @@ var apt = function (shCommand, tokens) {
       tokens.shift();
       _.each(tokens, function (x) {
         if (x[0] != '-') {
-          commands.push(printCmd(module, 'name=' + x + ' state=absent'));
+          commands.push({'apt': 'name=' + x + ' state=absent'});
         }
       });
     break;
@@ -47,7 +41,7 @@ var processInput = function (shCommand) {
   commands = [];
   if (tokens[0] === 'sudo') {
     tokens.shift();
-    commands = commands.concat(printCmd('sudo', 'yes'))
+    commands.push({'sudo': 'yes'})
   }
   if (tokens[0] === 'apt-get') {
     tokens.shift();
@@ -58,6 +52,5 @@ var processInput = function (shCommand) {
 
 
 exports.parse = parse;
-exports.printCmd = printCmd;
 exports.apt = apt;
 exports.processInput = processInput;

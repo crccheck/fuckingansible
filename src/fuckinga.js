@@ -1,3 +1,4 @@
+// main
 var $ = require('jquery');
 var _ = require('lodash');
 var backend = require('./fuckinga_backend');
@@ -10,23 +11,33 @@ var setDoc = function (url) {
 
 var out = document.getElementById('out'), $out = $(out);
 
-var cls = function () {
-  $out.html('');
-};
-
-var printCmd = function (text) {
-  out.innerHTML += text + '\n';
+// output the obj as YAML
+//
+// The node packages for dealing with YAML seem like too much for this
+// application, but maybe switch to one of those once I figure out which one of
+// the 60 yaml packages works.
+var printCmds = function (obj) {
+  var text = '';
+  var prefix = '- ';
+  _.each(obj, function (x) {
+    _.each(x, function (v, k) {
+      text += prefix + k + ': ' + v + '\n';
+    });
+    prefix = '  ';
+  });
+  out.innerHTML = text;
+  // adjust textarea height to fit contents
   if (out.scrollHeight > out.clientHeight) {
     $out.height(out.scrollHeight)
   }
 };
 
-backend.setDoc = setDoc;
+backend.setDoc = setDoc;  // FIXME
+
 $('#in').on('keyup', function () {
-  // TODO only cls if output changes
-  cls();
+  // TODO only print if output changes
   var commands = backend.processInput(this.value);
-  _.each(commands, printCmd);
+  printCmds(commands);
 });
 
 $('form').on('submit', function (e) { e.preventDefault(); });

@@ -19,7 +19,7 @@ module.exports = (grunt) ->
           spawn: false
       scripts:
         files: ['src/*.js']
-        tasks: ['browserify']
+        tasks: ['browserify', 'uglify']
         options:
           spawn: false
     nodeunit:
