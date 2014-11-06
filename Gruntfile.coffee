@@ -27,6 +27,8 @@ module.exports = (grunt) ->
         tasks: ['browserify', 'uglify']
         options:
           spawn: false
+      html:
+        files: ['index.html']
     nodeunit:
       all: ['test/*_test.js']
     uglify:

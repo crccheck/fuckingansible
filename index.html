@@ -2,15 +2,33 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
   <title>Fuckingansible</title>
   <link rel="stylesheet" href="fuckinga.css">
 </head>
 <body>
-  <form action="." method="GET">
-    <input id="in" type="text" name='shinput' autofocus>
-    <textarea id="out" readonly></textarea>
-  </form>
-  <p class="reference"><a id="docs" href=""></a></p>
+  <section>
+    <form action="." method="GET">
+      <label for="in">Shell command:</label>
+      <input id="in" type="text" name='shinput' placeholder="apt-get install toilet" autofocus>
+      <label for="out">Equivalent Ansible command:</label>
+      <textarea id="out" readonly></textarea>
+    </form>
+    <p class="reference"><a id="docs" href=""></a></p>
+  </section>
+  <section class="content">
+    <p>
+      Helper to translate shell commands to Ansible playbook entries.
+    </p>
+    <h3>Supports</h3>
+    <ul class="examples">
+      <li><code>apt-get -y install toilet</code></li>
+    </ul>
+    <h3>Limitations</h3>
+    <p>Options must be specified like <code>--port=8000</code>, not <code>--port 8000</code></p>
+
+  </section>
+
   <script src="fuckinga.min.js"></script>
 </body>
 </html>
