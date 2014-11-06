@@ -10,7 +10,9 @@
   <section>
     <form action="." method="GET">
       <label for="in">Type your shell command here:</label>
-      <input id="in" type="text" name='shinput' placeholder="apt-get install toilet" autofocus>
+      <div class="prompt">
+        $<input id="in" type="text" name='shinput' placeholder="apt-get install toilet" autofocus>
+      </div>
       <label for="out">Equivalent Ansible command:</label>
       <textarea id="out" readonly></textarea>
     </form>
