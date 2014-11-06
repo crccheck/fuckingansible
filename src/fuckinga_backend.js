@@ -4,10 +4,6 @@ var _ = require('lodash');
 var parser = require('./parser');
 
 
-// FIXME
-var setDoc = function () {};
-
-
 // map possible commands to the ansible module responsible
 var commandsToModule = {
   'apt-get': 'apt',
@@ -19,8 +15,7 @@ var commandsToModule = {
 
 var ansibleModules = {
   apt: function (shCommand, tokens) {
-    setDoc('http://docs.ansible.com/apt_module.html');
-    var commands = [];
+    var commands = [{'_doc': 'http://docs.ansible.com/apt_module.html'}];
     switch (tokens[0]) {
       case 'install':
         tokens.shift();
@@ -38,14 +33,14 @@ var ansibleModules = {
     return commands;
   },
   apt_repository: function (shCommand, tokens) {
-    setDoc('http://docs.ansible.com/apt_repository_module.html');
-    return {
+    var commands = [{'_doc': 'http://docs.ansible.com/apt_repository_module.html'}];
+    commands.push({
       apt_repository: "repo='" + tokens[0] + "'"
-    };
+    });
+    return commands;
   },
   pip: function (shCommand, tokens, options) {
-    setDoc('http://docs.ansible.com/pip_module.html');
-    var commands = [];
+    var commands = [{'_doc': 'http://docs.ansible.com/pip_module.html'}];
     if (tokens[0] === 'install') {
       tokens.shift();
       _.each(tokens, function (x) {
@@ -69,8 +64,7 @@ var ansibleModules = {
     return commands;
   },
   npm: function (shCommand, tokens, options) {
-    setDoc('http://docs.ansible.com/pip_module.html');
-    var commands = [];
+    var commands = [{'_doc': 'http://docs.ansible.com/npm_module.html'}];
     if (tokens[0] === 'install') {
       tokens.shift();
       _.each(tokens, function (x) {
