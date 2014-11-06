@@ -11,7 +11,8 @@ var setDoc = function () {};
 // map possible commands to the ansible module responsible
 var commandsToModule = {
   'apt-get': 'apt',
-  'add-apt-repository': 'apt_repository'
+  'add-apt-repository': 'apt_repository',
+  'pip': 'pip',
 };
 
 
@@ -23,17 +24,13 @@ var ansibleModules = {
       case 'install':
         tokens.shift();
         _.each(tokens, function (x) {
-          if (x[0] != '-') {
-            commands.push({'apt': 'name=' + x});
-          }
+          commands.push({'apt': 'name=' + x});
         });
       break;
       case 'remove':
         tokens.shift();
         _.each(tokens, function (x) {
-          if (x[0] != '-') {
-            commands.push({'apt': 'name=' + x + ' state=absent'});
-          }
+          commands.push({'apt': 'name=' + x + ' state=absent'});
         });
       break;
     }
@@ -44,6 +41,22 @@ var ansibleModules = {
     return {
       apt_repository: "repo='" + tokens[0] + "'"
     };
+  },
+  pip: function (shCommand, tokens) {
+    setDoc('http://docs.ansible.com/pip_module.html');
+    var commands = [];
+    if (tokens[0] === 'install') {
+      tokens.shift();
+      _.each(tokens, function (x) {
+        commands.push({'pip': 'name=' + x});
+      });
+    } else if (tokens[0] === 'uninstall') {
+      tokens.shift();
+      _.each(tokens, function (x) {
+        commands.push({'pip': 'name=' + x + ' state=absent'});
+      });
+    }
+    return commands;
   }
 };
 

@@ -20,3 +20,20 @@ exports.testAptRepository = function (test) {
   test.deepEqual(commands[0], {apt_repository: "repo='foo'"});
   test.done();
 };
+
+exports.testPip = function (test) {
+  var commands = backend.processInput('pip install foo');
+  test.deepEqual(commands[0], {pip: "name=foo"});
+
+  commands = backend.processInput('pip install foo bar');
+  test.deepEqual(commands[0], {pip: "name=foo"});
+  test.deepEqual(commands[1], {pip: "name=bar"});
+
+  commands = backend.processInput('pip uninstall foo');
+  test.deepEqual(commands[0], {pip: "name=foo state=absent"});
+
+  commands = backend.processInput('pip uninstall foo bar');
+  test.deepEqual(commands[0], {pip: "name=foo state=absent"});
+  test.deepEqual(commands[1], {pip: "name=bar state=absent"});
+  test.done();
+};
