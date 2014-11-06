@@ -10,7 +10,7 @@ module.exports = (grunt) ->
     browserify:
       dist:
         files:
-          'main.js': ['fuckinga.js']
+          'fuckinga.js': ['src/fuckinga.js']
     watch:
       style:
         files: ['*.sass']
@@ -18,7 +18,7 @@ module.exports = (grunt) ->
         options:
           spawn: false
       scripts:
-        files: ['fuckinga.js']
+        files: ['src/*.js']
         tasks: ['browserify']
         options:
           spawn: false
@@ -27,7 +27,7 @@ module.exports = (grunt) ->
     uglify:
       dist:
         files:
-          'main.min.js': ['main.js']
+          'fuckinga.min.js': ['fuckinga.js']
 
 
   # TODO livereload

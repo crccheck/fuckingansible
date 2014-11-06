@@ -1,4 +1,4 @@
-var backend = require('../fuckinga_backend');
+var backend = require('../src/fuckinga_backend');
 
 
 exports.testSomething = function(test){
