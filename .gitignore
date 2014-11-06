@@ -1,5 +1,9 @@
 node_modules/
-*.map
 
-# intermediate file
+# intermediate files
 fuckinga.js
+
+# compiled files
+*.map
+*.min.js
+fuckina.css
