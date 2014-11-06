@@ -28,5 +28,15 @@ var CommandParser = (function() {
   }
 })();
 
-// I added this for CommonJS support
-module.exports = CommandParser;
+
+//////////// separate args from options
+// TODO
+
+var parse = function (line) {
+  // return line.split(/s+/);
+  return CommandParser.parse(line, true);
+};
+
+
+exports.CommandParser = CommandParser;
+exports.parse = parse;

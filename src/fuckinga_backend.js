@@ -1,13 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var CommandParser = require('./parser');
-
-// wrapper around parser.js
-var parse = function (line) {
-  // return line.split(/s+/);
-  return CommandParser.parse(line, true);
-};
+var parser = require('./parser');
 
 
 // FIXME
@@ -55,7 +49,7 @@ var ansibleModules = {
 
 
 var processInput = function (shCommand) {
-  var tokens = parse(shCommand.trim());
+  var tokens = parser.parse(shCommand.trim());
   var commands = [];
   if (tokens[0] === 'sudo') {
     tokens.shift();
@@ -70,5 +64,4 @@ var processInput = function (shCommand) {
 };
 
 
-exports.parse = parse;
 exports.processInput = processInput;
