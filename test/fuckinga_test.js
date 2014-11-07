@@ -49,6 +49,16 @@ exports.testAptKey = function (test) {
 };
 
 
+exports.testMkdir = function (test) {
+  var commands = processInput('mkdir /foo/bar');
+  test.deepEqual(commands[0], {file: "path=/foo/bar state=directory"});
+
+  commands = processInput('mkdir -p /foo/bar');
+  test.deepEqual(commands[0], {file: "path=/foo/bar state=directory"});
+  test.done();
+};
+
+
 exports.testNpm = function (test) {
   var commands = processInput('npm install foo');
   test.deepEqual(commands[0], {npm: "name=foo"});

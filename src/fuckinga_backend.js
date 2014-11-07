@@ -48,6 +48,14 @@ var ansibleModules = {
     });
     return commands;
   },
+  // hmmm, mkdir isn't an ansible module. need to rename things?
+  mkdir: function (shCommand, args) {
+    var commands = [{'_doc': 'http://docs.ansible.com/file_module.html'}];
+    commands.push({
+      file: 'path=' + (args[0] || '?') + ' state=directory'
+    });
+    return commands;
+  },
   npm: function (shCommand, tokens, options) {
     var commands = [{'_doc': 'http://docs.ansible.com/npm_module.html'}];
     if (tokens[0] === 'install') {
