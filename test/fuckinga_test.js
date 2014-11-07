@@ -86,3 +86,19 @@ exports.testPip = function (test) {
   test.done();
 };
 
+
+exports.testService = function (test) {
+  var commands = processInput('service smile start');
+  test.deepEqual(commands[0], {service: "name=smile state=started"});
+
+  commands = processInput('service smile stop');
+  test.deepEqual(commands[0], {service: "name=smile state=stopped"});
+
+  commands = processInput('service smile restart');
+  test.deepEqual(commands[0], {service: "name=smile state=restarted"});
+
+  commands = processInput('service smile reload');
+  test.deepEqual(commands[0], {service: "name=smile state=reloaded"});
+  test.done();
+};
+

@@ -86,6 +86,20 @@ var ansibleModules = {
     }
     return commands;
   },
+  service: function (shCommand, tokens) {
+    var commands = [{'_doc': 'http://docs.ansible.com/service_module.html'}];
+    var state = tokens[1], stated;
+    // guess the past tense of the state
+    if (state === 'stop') {
+      stated = 'stopped';
+    } else if (state) {
+      stated = state + 'ed';
+    } else {
+      stated = '?';
+    }
+    commands.push({'service': 'name=' + (tokens[0] || '?') + ' state=' + stated});
+    return commands;
+  }
 };
 
 
