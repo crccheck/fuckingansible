@@ -49,6 +49,13 @@ exports.testAptKey = function (test) {
 };
 
 
+exports.testCurl = function (test) {
+  var commands = processInput('curl http://example.com > /tmp/important.txt');
+  test.deepEqual(commands[0], {get_url: "url=http://example.com dest=/tmp/important.txt"});
+  test.done();
+};
+
+
 exports.testMkdir = function (test) {
   var commands = processInput('mkdir /foo/bar');
   test.deepEqual(commands[0], {file: "path=/foo/bar state=directory"});

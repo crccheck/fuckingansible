@@ -37,6 +37,15 @@ var commandPlaybooks = {
     });
     return commands;
   },
+  curl: function (shCommand, args) {
+    var commands = [{'_doc': 'http://docs.ansible.com/get_url_module.html'}];
+    var alligatorIdx = args.indexOf('>');
+    var dest = args[alligatorIdx + 1] || '?';
+    commands.push({
+      get_url: 'url=' + (args[0] || '?') + ' dest=' + dest
+    });
+    return commands;
+  },
   docker: function () {
     var commands = [{'_doc': 'docs.ansible.com/docker_module.html'}];
     // TODO
