@@ -4,19 +4,8 @@ var _ = require('lodash');
 var parser = require('./parser');
 
 
-// map possible commands to the ansible module responsible
-//
-// This lets us use the ansible module name as the key in `ansibleModules`.
-var commandsToModule = {
-  'add-apt-repository': 'apt_repository',
-  'apt-get': 'apt',
-  'apt-key': 'apt_key'
-};
-
-
-// name the keys after the ansible module name
-var ansibleModules = {
-  apt: function (shCommand, tokens) {
+var commandPlaybooks = {
+  'apt-get': function (shCommand, tokens) {
     var commands = [{'_doc': 'http://docs.ansible.com/apt_module.html'}];
     switch (tokens[0]) {
       case 'install':
@@ -34,21 +23,20 @@ var ansibleModules = {
     }
     return commands;
   },
-  apt_repository: function (shCommand, tokens) {
+  'add-apt-repository': function (shCommand, tokens) {
     var commands = [{'_doc': 'http://docs.ansible.com/apt_repository_module.html'}];
     commands.push({
       apt_repository: "repo='" + tokens[0] + "'"
     });
     return commands;
   },
-  apt_key: function (shCommand, tokens, options) {
+  'apt-key': function (shCommand, tokens, options) {
     var commands = [{'_doc': 'http://docs.ansible.com/apt_key_module.html'}];
     commands.push({
       apt_key: 'keyserver=' + options['--keyserver'] + ' id=' + options['--recv-keys']
     });
     return commands;
   },
-  // hmmm, mkdir isn't an ansible module. need to rename things?
   mkdir: function (shCommand, args) {
     var commands = [{'_doc': 'http://docs.ansible.com/file_module.html'}];
     commands.push({
@@ -120,8 +108,8 @@ var processInput = function (shCommand) {
     args.shift();
     commands.push({'sudo': 'yes'});
   }
-  var ansibleModuleName = commandsToModule[args[0]] || args[0];
-  var module = ansibleModules[ansibleModuleName];
+  var ansibleModuleName = args[0];
+  var module = commandPlaybooks[ansibleModuleName];
   if (module) {
     args.shift();
     commands = commands.concat(module(shCommand, args, options));
