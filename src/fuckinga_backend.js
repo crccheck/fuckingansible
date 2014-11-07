@@ -5,12 +5,12 @@ var parser = require('./parser');
 
 
 // map possible commands to the ansible module responsible
+//
+// This lets us use the ansible module name as the key in `ansibleModules`.
 var commandsToModule = {
   'add-apt-repository': 'apt_repository',
   'apt-get': 'apt',
-  'apt-key': 'apt_key',
-  'npm': 'npm',
-  'pip': 'pip'
+  'apt-key': 'apt_key'
 };
 
 
@@ -48,6 +48,20 @@ var ansibleModules = {
     });
     return commands;
   },
+  npm: function (shCommand, tokens, options) {
+    var commands = [{'_doc': 'http://docs.ansible.com/npm_module.html'}];
+    if (tokens[0] === 'install') {
+      tokens.shift();
+      _.each(tokens, function (x) {
+        if ('-g' in options || '--global' in options) {
+          commands.push({'npm': 'name=' + x + ' global=yes'});
+        } else {
+          commands.push({'npm': 'name=' + x});
+        }
+      });
+    }
+    return commands;
+  },
   pip: function (shCommand, tokens, options) {
     var commands = [{'_doc': 'http://docs.ansible.com/pip_module.html'}];
     if (tokens[0] === 'install') {
@@ -72,20 +86,6 @@ var ansibleModules = {
     }
     return commands;
   },
-  npm: function (shCommand, tokens, options) {
-    var commands = [{'_doc': 'http://docs.ansible.com/npm_module.html'}];
-    if (tokens[0] === 'install') {
-      tokens.shift();
-      _.each(tokens, function (x) {
-        if ('-g' in options || '--global' in options) {
-          commands.push({'npm': 'name=' + x + ' global=yes'});
-        } else {
-          commands.push({'npm': 'name=' + x});
-        }
-      });
-    }
-    return commands;
-  }
 };
 
 
@@ -98,7 +98,8 @@ var processInput = function (shCommand) {
     args.shift();
     commands.push({'sudo': 'yes'});
   }
-  var module = ansibleModules[commandsToModule[args[0]]];
+  var ansibleModuleName = commandsToModule[args[0]] || args[0];
+  var module = ansibleModules[ansibleModuleName];
   if (module) {
     args.shift();
     commands = commands.concat(module(shCommand, args, options));
