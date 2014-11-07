@@ -37,6 +37,11 @@ var commandPlaybooks = {
     });
     return commands;
   },
+  docker: function () {
+    var commands = [{'_doc': 'docs.ansible.com/docker_module.html'}];
+    // TODO
+    return commands;
+  },
   mkdir: function (shCommand, args) {
     var commands = [{'_doc': 'http://docs.ansible.com/file_module.html'}];
     commands.push({
