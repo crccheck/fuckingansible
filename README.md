@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/crccheck/fuckingansible.svg?branch=master)](https://travis-ci.org/crccheck/fuckingansible)
+
+
 Getting Started
 ---------------
 
