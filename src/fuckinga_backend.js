@@ -37,6 +37,18 @@ var commandPlaybooks = {
     });
     return commands;
   },
+  cp: function (shCommand, args) {
+    var commands = [{'_doc': 'http://docs.ansible.com/copy_module.html'}];
+    var dest = args[1] || '';
+    if (dest[0] != '/') {
+      // dest must be an absolute path
+      dest = '/' + dest;
+    }
+    commands.push({
+      src: args[0] || '?', dest: dest
+    });
+    return commands;
+  },
   curl: function (shCommand, args) {
     var commands = [{'_doc': 'http://docs.ansible.com/get_url_module.html'}];
     var alligatorIdx = args.indexOf('>');

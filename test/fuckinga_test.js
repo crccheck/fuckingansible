@@ -49,6 +49,16 @@ exports.testAptKey = function (test) {
 };
 
 
+exports.testCp = function (test) {
+  var commands = processInput('cp config.conf /etc/configs/pig.oink');
+  test.deepEqual(commands[0], {src: 'config.conf', dest: '/etc/configs/pig.oink'});
+
+  // assert dest is an absolute path
+  commands = processInput('cp config.conf etc/configs/pig.oink');
+  test.equal(commands[0].dest[0], '/');
+  test.done();
+};
+
 exports.testCurl = function (test) {
   var commands = processInput('curl http://example.com > /tmp/important.txt');
   test.deepEqual(commands[0], {get_url: "url=http://example.com dest=/tmp/important.txt"});
