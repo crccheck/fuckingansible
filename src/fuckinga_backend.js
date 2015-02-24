@@ -11,13 +11,13 @@ var commandPlaybooks = {
       case 'install':
         tokens.shift();
         _.each(tokens, function (x) {
-          commands.push({'apt': 'name=' + x});
+          commands.push({apt: {name: x}});
         });
       break;
       case 'remove':
         tokens.shift();
         _.each(tokens, function (x) {
-          commands.push({'apt': 'name=' + x + ' state=absent'});
+          commands.push({apt: [{name: x}, 'state=absent']});
         });
       break;
     }

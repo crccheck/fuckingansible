@@ -1,5 +1,9 @@
-// assemble a data structure to return the text of a command
+'use strict';
 
+// assemble a data structure to return the text of a command
+//
+// Makes it easier to construct a complicated command to remove having to deal
+// with string interpolation.
 var assemble = function (input) {
   if (Array.isArray(input)) {
     return input.map(assemble).join(' ');

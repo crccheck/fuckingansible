@@ -17,17 +17,17 @@ exports.testDocs = function (test) {
 
 exports.testApt = function (test) {
   var commands = processInput('apt-get install foo');
-  test.deepEqual(commands[0], {apt: 'name=foo'});
+  test.deepEqual(commands[0], {apt: {name: 'foo'}});
 
   commands = processInput('apt-get install foo -y');
-  test.deepEqual(commands[0], {apt: 'name=foo'});
+  test.deepEqual(commands[0], {apt: {name: 'foo'}});
 
   commands = processInput('apt-get remove foo');
-  test.deepEqual(commands[0], {apt: 'name=foo state=absent'});
+  test.deepEqual(commands[0], {apt: [{name: 'foo'}, 'state=absent']});
 
   commands = processInput('sudo apt-get install foo');
   test.deepEqual(commands[0], {sudo: 'yes'});
-  test.deepEqual(commands[1], {apt: 'name=foo'});
+  test.deepEqual(commands[1], {apt: {name: 'foo'}});
   test.done();
 };
 
