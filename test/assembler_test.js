@@ -1,14 +1,27 @@
 var assemble = require('../src/assembler').assemble;
 
 
-exports.testAssemblerTrivial = function (test) {
+exports.testAssembleStringTrivial = function (test) {
   test.equal(assemble(''), '');
 
   test.done();
 };
 
-exports.testAssemblerString = function (test) {
+exports.testAssembleString = function (test) {
   test.equal(assemble('foo'), 'foo');
+
+  test.done();
+};
+
+exports.testAssembleArrayTrivial = function (test) {
+  test.equal(assemble([]), '');
+
+  test.done();
+};
+
+exports.testAssembleArray = function (test) {
+  test.equal(assemble(['foo']), 'foo');
+  test.equal(assemble(['foo', 'bar']), 'foo bar');
 
   test.done();
 };
