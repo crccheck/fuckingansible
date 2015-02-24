@@ -66,6 +66,13 @@ exports.testCurl = function (test) {
 };
 
 
+exports.testDocker = function (test) {
+  var commands = processInput('docker crccheck/zz');
+  test.deepEqual(commands[0], {docker: "image=crccheck/zz"});
+  test.done();
+};
+
+
 exports.testMkdir = function (test) {
   var commands = processInput('mkdir /foo/bar');
   test.deepEqual(commands[0], {file: "path=/foo/bar state=directory"});

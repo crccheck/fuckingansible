@@ -58,9 +58,12 @@ var commandPlaybooks = {
     });
     return commands;
   },
-  docker: function () {
-    var commands = [{'_doc': 'docs.ansible.com/docker_module.html'}];
-    // TODO
+  docker: function (shCommand, args) {
+    var commands = [{'_doc': 'http://docs.ansible.com/docker_module.html'}];
+    var image = args[args.length - 1];  // TODO support commands
+    commands.push({
+      docker: 'image=' + image
+    });
     return commands;
   },
   mkdir: function (shCommand, args) {
