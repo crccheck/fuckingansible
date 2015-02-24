@@ -45,7 +45,7 @@ var commandPlaybooks = {
       dest = '/' + dest;
     }
     commands.push({
-      src: args[0] || '?', dest: dest
+      copy: 'src=' + (args[0] || '?') + ' dest=' + dest
     });
     return commands;
   },

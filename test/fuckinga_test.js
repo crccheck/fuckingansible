@@ -51,11 +51,13 @@ exports.testAptKey = function (test) {
 
 exports.testCp = function (test) {
   var commands = processInput('cp config.conf /etc/configs/pig.oink');
-  test.deepEqual(commands[0], {src: 'config.conf', dest: '/etc/configs/pig.oink'});
+  test.deepEqual(commands[0], {
+    copy: 'src=config.conf dest=/etc/configs/pig.oink'});
 
   // assert dest is an absolute path
   commands = processInput('cp config.conf etc/configs/pig.oink');
-  test.equal(commands[0].dest[0], '/');
+  test.deepEqual(commands[0], {
+    copy: 'src=config.conf dest=/etc/configs/pig.oink'});
   test.done();
 };
 
