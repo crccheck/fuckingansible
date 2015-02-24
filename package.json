@@ -4,6 +4,10 @@
   "description": "",
   "main": "src/fuckinga.js",
   "author": "crccheck",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crccheck/fuckingansible.git"
+  },
   "scripts": {
     "test": "grunt test"
   },
