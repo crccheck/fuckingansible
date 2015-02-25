@@ -69,8 +69,10 @@ exports.testCurl = function (test) {
 
 
 exports.testDocker = function (test) {
-  var commands = processInput('docker crccheck/zz');
-  test.deepEqual(commands[0], {docker: "image=crccheck/zz"});
+  var commands = processInput('docker run crccheck/zz');
+  test.deepEqual(commands[0].docker[0], {image: 'crccheck/zz'});
+  test.deepEqual(commands[0].docker[1], 'state=running');
+  test.deepEqual(commands[0].docker[2], 'detach=False');
   test.done();
 };
 
