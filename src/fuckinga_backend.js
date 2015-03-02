@@ -11,13 +11,13 @@ var commandPlaybooks = {
       case 'install':
         tokens.shift();
         _.each(tokens, function (x) {
-          commands.push({'apt': 'name=' + x});
+          commands.push({apt: {name: x}});
         });
       break;
       case 'remove':
         tokens.shift();
         _.each(tokens, function (x) {
-          commands.push({'apt': 'name=' + x + ' state=absent'});
+          commands.push({apt: [{name: x}, 'state=absent']});
         });
       break;
     }
@@ -58,12 +58,36 @@ var commandPlaybooks = {
     });
     return commands;
   },
-  docker: function (shCommand, args) {
+  docker: function (shCommand, args, options) {
     var commands = [{'_doc': 'http://docs.ansible.com/docker_module.html'}];
-    var image = args[args.length - 1];  // TODO support commands
-    commands.push({
-      docker: 'image=' + image
-    });
+    // XXX assume the last arg is the image name
+    var cargs = [{image: args[args.length - 1]}];
+    switch(args[0]) {
+      case 'create':
+        cargs.push('state=present');
+      break;
+      case 'run': // falls through
+      case 'start':
+        cargs.push('state=running');
+      break;
+      case 'stop':
+        cargs.push('state=stopped');
+      break;
+      case 'kill':
+        cargs.push('state=killed');
+      break;
+      case 'rm':
+        cargs.push('state=absent');
+      break;
+      case 'restart':
+        cargs.push('state=restarted');
+      break;
+    }
+    if (!('-d' in options || '--detached' in options)) {
+      // ansible sets detach=True by default
+      cargs.push('detach=False');
+    }
+    commands.push({docker: cargs});
     return commands;
   },
   mkdir: function (shCommand, args) {

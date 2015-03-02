@@ -4,6 +4,7 @@
 var $ = require('jquery');
 var _ = require('lodash');
 var backend = require('./fuckinga_backend');
+var assemble = require('./assembler').assemble;
 
 var $docs = $('#docs');
 
@@ -27,7 +28,7 @@ var printCmds = function (commands) {
   // display `justCommands` as YAML
   _.each(justCommands, function (x) {
     _.each(x, function (v, k) {
-      textBits.push(prefix + k + ': ' + v);
+      textBits.push(prefix + k + ': ' + assemble(v));
     });
     prefix = '  ';
   });

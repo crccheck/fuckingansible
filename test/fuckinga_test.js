@@ -17,17 +17,17 @@ exports.testDocs = function (test) {
 
 exports.testApt = function (test) {
   var commands = processInput('apt-get install foo');
-  test.deepEqual(commands[0], {apt: 'name=foo'});
+  test.deepEqual(commands[0], {apt: {name: 'foo'}});
 
   commands = processInput('apt-get install foo -y');
-  test.deepEqual(commands[0], {apt: 'name=foo'});
+  test.deepEqual(commands[0], {apt: {name: 'foo'}});
 
   commands = processInput('apt-get remove foo');
-  test.deepEqual(commands[0], {apt: 'name=foo state=absent'});
+  test.deepEqual(commands[0], {apt: [{name: 'foo'}, 'state=absent']});
 
   commands = processInput('sudo apt-get install foo');
   test.deepEqual(commands[0], {sudo: 'yes'});
-  test.deepEqual(commands[1], {apt: 'name=foo'});
+  test.deepEqual(commands[1], {apt: {name: 'foo'}});
   test.done();
 };
 
@@ -69,8 +69,10 @@ exports.testCurl = function (test) {
 
 
 exports.testDocker = function (test) {
-  var commands = processInput('docker crccheck/zz');
-  test.deepEqual(commands[0], {docker: "image=crccheck/zz"});
+  var commands = processInput('docker run crccheck/zz');
+  test.deepEqual(commands[0].docker[0], {image: 'crccheck/zz'});
+  test.deepEqual(commands[0].docker[1], 'state=running');
+  test.deepEqual(commands[0].docker[2], 'detach=False');
   test.done();
 };
 
